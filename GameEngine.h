@@ -14,7 +14,6 @@ class GameEngine {
 
 public:
     GameEngine(Human human, AI ai);
-    // ~GameEngine();
 
     void play();
 
