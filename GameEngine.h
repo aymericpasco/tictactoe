@@ -14,10 +14,9 @@ class GameEngine {
 
 public:
     GameEngine(Human human, AI ai);
+    // ~GameEngine();
 
     void play();
-
-    void printBoard();
 
 private:
     std::vector<std::vector<char>> m_board;
@@ -27,6 +26,10 @@ private:
 
     void setupBoard();
 
+    void printBoard();
+
+    bool checkWin(Player player);
+    bool gameOver();
 };
 
 
