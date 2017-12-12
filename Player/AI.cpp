@@ -34,36 +34,55 @@ std::vector<int> AI::findBestMove(std::vector<std::vector<char>> board) {
 
 int AI::minimax(std::vector<std::vector<char>> board, int depth, bool isMax) {
     int score = this->evaluate(board);
+    int best;
 
-    if (score == 10) return score;
-    if (score == -10) return score;
+    if (score == 10 || score == -10) return score;
     if (!this->isMovesLeft(board)) return 0;
 
-    if (isMax) {
-        int best = -1000;
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                if (board[i][j] == '-') {
+    if (isMax) best = -1000;
+    else best = 1000;
+
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (board[i][j] == '-') {
+                if (isMax) {
                     board[i][j] = this->getId();
-                    best = std::max (best, this->minimax(board, depth+1, !isMax));
-                    board[i][j] = '-';
-                }
-            }
-        }
-        return best;
-    } else {
-        int best = 1000;
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                if (board[i][j] == '-') {
+                    best = std::max(best, this->minimax(board, depth + 1, !isMax));
+                } else {
                     board[i][j] = 'X';
                     best = std::min (best, this->minimax(board, depth+1, !isMax));
-                    board[i][j] = '-';
                 }
+                board[i][j] = '-';
             }
         }
-        return best;
     }
+    return best;
+
+//    if (isMax) {
+//        int best = -1000;
+//        for (int i = 0; i < 3; ++i) {
+//            for (int j = 0; j < 3; ++j) {
+//                if (board[i][j] == '-') {
+//                    board[i][j] = this->getId();
+//                    best = std::max (best, this->minimax(board, depth+1, !isMax));
+//                    board[i][j] = '-';
+//                }
+//            }
+//        }
+//        return best;
+//    } else {
+//        int best = 1000;
+//        for (int i = 0; i < 3; ++i) {
+//            for (int j = 0; j < 3; ++j) {
+//                if (board[i][j] == '-') {
+//                    board[i][j] = 'X';
+//                    best = std::min (best, this->minimax(board, depth+1, !isMax));
+//                    board[i][j] = '-';
+//                }
+//            }
+//        }
+//        return best;
+//    }
 }
 
 int AI::evaluate(std::vector<std::vector<char>> b) {
